@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<title>test</title>
+	<script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js'></script>
+</head>
+<body>
+	<script type='text/javascript'>
+		var result=[];
+		var paramId = null;
+		var index=0;
+		/*function getToday(){
+		    var date = new Date();
+		    var year = date.getFullYear();
+		    var month = ("0" + (1 + date.getMonth())).slice(-2);
+		    var day = ("0" + date.getDate()).slice(-2);
+
+		    return year + month + day;
+		}*/
+		function aaa (){
+			$.ajax({
+			    url: 'https://proton.greymass.com/v1/chain/get_table_rows', // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+			    data: JSON.stringify({'json':true,
+			    		'code':'eosio',
+			    		'scope':'eosio',
+			    		'table':'votersxpr',
+			    		'lower_bound':paramId,
+			    		'upper_bound':null,
+			    		'index_position':1,
+			    		'key_type':'',
+			    		'limit':100,
+			    		'reverse':false,
+			    		'show_payer':true}),  // HTTP 요청과 함께 서버로 보낼 데이터
+			    method: 'POST',   // HTTP 요청 메소드(GET, POST 등)
+			    dataType: 'json', // 서버에서 보내줄 데이터의 타입
+			    success: function ss(res) {
+			    	paramId=res.next_key;
+			    	result.push(...res.rows);
+			    	index++;
+			    	if(res.more===true&&res.next_key!==""){
+			    		aaa();
+			    	}else{
+			    		calculateAll();
+			    	}
+			    }
+			});
+
+		}
+		/*function saveAsFile(str, filename) {
+		    var hiddenElement = document.createElement('a');
+		    hiddenElement.href = 'data:attachment/text,' + encodeURI(str);
+		    hiddenElement.target = '_blank';
+		    hiddenElement.download = filename;
+		    hiddenElement.click();
+		}*/
+
+		var amoutMap=new Map();
+		var amoutMap2=new Map();
+		let stakedNum = 0;
+		let claimNum = 0;
+		function calculateAll() {
+			result.forEach((e)=>{
+					if(e.data.isqualified===1){
+						if(isNaN(Number(e.data.staked))){
+							console.log(e.data);
+						}else{
+							stakedNum = Number(e.data.staked);
+						}
+						if(isNaN(Number(e.data.claimamount))){
+							console.log(e.data);
+						}else{
+							claimNum = Number(e.data.claimamount)
+						}
+						amoutMap.set(e.data.owner,(stakedNum+claimNum)/10000);
+					}else{
+						if(isNaN(Number(e.data.staked))){
+							console.log(e.data);
+						}else{
+							stakedNum = Number(e.data.staked);
+						}
+						if(isNaN(Number(e.data.claimamount))){
+							console.log(e.data);
+						}else{
+							claimNum = Number(e.data.claimamount)
+						}
+						amoutMap2.set(e.data.owner,(stakedNum+claimNum)/10000);
+					}
+				
+			});
+			const amoutArray = Array.from(amoutMap);
+			amoutArray.sort((a, b) => b[1] - a[1]);
+			const amoutArray2 = Array.from(amoutMap2);
+			amoutArray2.sort((a, b) => b[1] - a[1]);
+
+			let aaaaaa = 0;
+			amoutArray.forEach(e=>{
+			    aaaaaa+=Number(e[1]);
+			});
+			console.log(aaaaaa);
+			let aaaaaa2 = 0;
+			amoutArray2.forEach(e=>{
+			    aaaaaa2+=Number(e[1]);
+			});
+			console.log(aaaaaa2);
+			console.log(aaaaaa+aaaaaa2);
+		}
+	</script>
+</body>
+</html>

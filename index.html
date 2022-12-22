@@ -33,7 +33,7 @@
 			    data: JSON.stringify({'json':true,
 			    		'code':'eosio',
 			    		'scope':'eosio',
-			    		'table':'votersxpr',
+			    		'table':'voters',
 			    		'lower_bound':paramId,
 			    		'upper_bound':null,
 			    		'index_position':1,
@@ -126,17 +126,12 @@
 			spinnerStop();
 			result.forEach((e)=>{
 						if(isNaN(Number(e.data.staked))){
-							stakedNum=0;
+							console.log(e.data);
 						}else{
 							stakedNum = Number(e.data.staked);
 						}
-						if(isNaN(Number(e.data.claimamount))){
-							claimNum=0;
-						}else{
-							claimNum = Number(e.data.claimamount);
-						}
 						
-						amoutMap.set(e.data.owner,(stakedNum+claimNum)/10000);
+						amoutMap.set(e.data.owner,stakedNum/10000);
 						
 				
 			});

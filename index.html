@@ -74,9 +74,7 @@
 							claimNum = Number(e.data.claimamount)
 						}
 						amoutMap.set(e.data.owner,(stakedNum+claimNum)/10000);
-						var accountdiv = document.createElement('span');
-						accountdiv.innerHTML=e.data.owner+' - '+(stakedNum+claimNum)/10000;
-						$('#accounts').append(accountdiv);
+						
 				
 			});
 			const amoutArray = Array.from(amoutMap);
@@ -84,6 +82,9 @@
 			
 			let aaaaaa = 0;
 			amoutArray.forEach(e=>{
+				var accountdiv = document.createElement('span');
+				accountdiv.innerHTML=e[0]+' - '+e[1]+'<br>';
+				$('#accounts').append(accountdiv);
 			    aaaaaa+=Number(e[1]);
 			});
 			console.log(aaaaaa);

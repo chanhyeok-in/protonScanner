@@ -7,7 +7,7 @@
 	<script src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js'></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.js"></script>
 </head>
-<body onload="aaa()">
+<body onload="getStakers()">
 	<h2>Stakers List</h2>
 	<div id='accounts'></div>
 	<script type='text/javascript'>
@@ -22,8 +22,12 @@
 
 		    return year + month + day;
 		}*/
-		function aaa (){
+		function getStakers(){
 			spinnerStart();
+			aaa();
+		}
+		function aaa (){
+			
 			$.ajax({
 			    url: 'https://proton.greymass.com/v1/chain/get_table_rows', 
 			    data: JSON.stringify({'json':true,

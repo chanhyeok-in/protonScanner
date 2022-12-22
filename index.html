@@ -125,13 +125,15 @@
 		function calculateAll() {
 			spinnerStop();
 			result.forEach((e)=>{
-						if(isNaN(Number(e.data.staked))){
-							console.log(e.data);
-						}else{
-							stakedNum = Number(e.data.staked);
-						}
-						
-						amoutMap.set(e.data.owner,stakedNum/10000);
+				if(e.data.staked!==0&&e.data.staked!=='0'&&e.data.staked!==undefined&&e.data.staked!==null){
+					if(isNaN(Number(e.data.staked))){
+						console.log(e.data);
+					}else{
+						stakedNum = Number(e.data.staked);
+					}
+					
+					amoutMap.set(e.data.owner,stakedNum/10000);
+				}
 						
 				
 			});

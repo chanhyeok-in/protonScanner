@@ -5,8 +5,9 @@
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
 	<title>test</title>
 	<script src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.js"></script>
 </head>
-<body>
+<body onload="aaa()">
 	<h2>Stakers List</h2>
 	<div id='accounts'></div>
 	<script type='text/javascript'>
@@ -22,8 +23,9 @@
 		    return year + month + day;
 		}*/
 		function aaa (){
+			spinnerStart();
 			$.ajax({
-			    url: 'https://proton.greymass.com/v1/chain/get_table_rows', // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+			    url: 'https://proton.greymass.com/v1/chain/get_table_rows', 
 			    data: JSON.stringify({'json':true,
 			    		'code':'eosio',
 			    		'scope':'eosio',
@@ -34,9 +36,9 @@
 			    		'key_type':'',
 			    		'limit':100,
 			    		'reverse':false,
-			    		'show_payer':true}),  // HTTP 요청과 함께 서버로 보낼 데이터
-			    method: 'POST',   // HTTP 요청 메소드(GET, POST 등)
-			    dataType: 'json', // 서버에서 보내줄 데이터의 타입
+			    		'show_payer':true}),  
+			    method: 'POST',  
+			    dataType: 'json', 
 			    success: function ss(res) {
 			    	paramId=res.next_key;
 			    	result.push(...res.rows);
@@ -50,6 +52,60 @@
 			});
 
 		}
+		function spinnerStart(){
+
+
+    		var createLayDiv = document.createElement("div");
+    		createLayDiv.setAttribute("id", "spinnerLay1000");
+    		var createLayDivStyle = "width:100%; height:100%; margin:0 auto; padding:0; border:none;";
+    		createLayDivStyle = createLayDivStyle + " float:top; position:fixed; top:0%; z-index:1000;";
+    		createLayDiv.setAttribute("style", createLayDivStyle);
+    		document.body.appendChild(createLayDiv); 
+
+
+    		var createSpinDiv = document.createElement("div");
+    		createSpinDiv.setAttribute("id", "spinnerContainer1000");
+    		var createSpinDivStyle = "width:100px; height:100px; margin:0 auto; padding:0; border:none;"; 
+    		createSpinDivStyle = createSpinDivStyle + " float:top; position:relative; top:40%;";
+    		createSpinDiv.setAttribute("style", createSpinDivStyle);
+    		document.getElementById("spinnerLay1000").appendChild(createSpinDiv); 
+
+
+    		var opts = {
+    			lines: 10, 
+    			length: 0, 
+    			width: 15, 
+    			radius: 42, 
+    			scale: 0.85, 
+    			corners: 1, 
+    			color: '#3399ff', 
+    			fadeColor: 'transparent', 
+    			opacity: 0.05, 
+    			rotate: 0, 
+    			direction: 1, 
+    			speed: 1, 
+    			trail: 74, 
+    			fps: 20, 
+    			zIndex: 2e9 
+    		};
+
+
+    		var target = document.getElementById("spinnerContainer1000");
+    		var spinner = new Spinner(opts).spin(target);
+    	};
+
+
+
+
+    	function spinnerStop(){
+    		try {
+    			var tagId = document.getElementById("spinnerLay1000");
+    			document.body.removeChild(tagId); 
+    		}
+    		catch (exception) {
+    		}
+    	};
+
 		/*function saveAsFile(str, filename) {
 		    var hiddenElement = document.createElement('a');
 		    hiddenElement.href = 'data:attachment/text,' + encodeURI(str);
@@ -63,6 +119,7 @@
 		let stakedNum = 0;
 		let claimNum = 0;
 		function calculateAll() {
+			spinnerStop();
 			result.forEach((e)=>{
 						if(isNaN(Number(e.data.staked))){
 							console.log(e.data);

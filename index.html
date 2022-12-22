@@ -7,6 +7,7 @@
 	<script src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js'></script>
 </head>
 <body>
+	<h2>Stakers List</h2>
 	<div id='accounts'></div>
 	<script type='text/javascript'>
 		var result=[];
@@ -26,7 +27,7 @@
 			    data: JSON.stringify({'json':true,
 			    		'code':'eosio',
 			    		'scope':'eosio',
-			    		'table':'votersxpr',
+			    		'table':'voters',
 			    		'lower_bound':paramId,
 			    		'upper_bound':null,
 			    		'index_position':1,
@@ -68,12 +69,8 @@
 						}else{
 							stakedNum = Number(e.data.staked);
 						}
-						if(isNaN(Number(e.data.claimamount))){
-							console.log(e.data);
-						}else{
-							claimNum = Number(e.data.claimamount)
-						}
-						amoutMap.set(e.data.owner,(stakedNum+claimNum)/10000);
+						
+						amoutMap.set(e.data.owner,stakedNum/10000);
 						
 				
 			});
@@ -81,11 +78,13 @@
 			amoutArray.sort((a, b) => b[1] - a[1]);
 			
 			let aaaaaa = 0;
+			let index = 1;
 			amoutArray.forEach(e=>{
 				var accountdiv = document.createElement('span');
-				accountdiv.innerHTML=e[0]+' - '+e[1]+'<br>';
+				accountdiv.innerHTML=index+'. '+e[0]+' - '+e[1]+'<br>';
 				$('#accounts').append(accountdiv);
 			    aaaaaa+=Number(e[1]);
+			    index++;
 			});
 			console.log(aaaaaa);
 			

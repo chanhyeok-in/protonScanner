@@ -7,6 +7,7 @@
 	<script src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js'></script>
 </head>
 <body>
+	<div id='accounts'></div>
 	<script type='text/javascript'>
 		var result=[];
 		var paramId = null;
@@ -62,7 +63,6 @@
 		let claimNum = 0;
 		function calculateAll() {
 			result.forEach((e)=>{
-					if(e.data.isqualified===1){
 						if(isNaN(Number(e.data.staked))){
 							console.log(e.data);
 						}else{
@@ -74,37 +74,20 @@
 							claimNum = Number(e.data.claimamount)
 						}
 						amoutMap.set(e.data.owner,(stakedNum+claimNum)/10000);
-					}else{
-						if(isNaN(Number(e.data.staked))){
-							console.log(e.data);
-						}else{
-							stakedNum = Number(e.data.staked);
-						}
-						if(isNaN(Number(e.data.claimamount))){
-							console.log(e.data);
-						}else{
-							claimNum = Number(e.data.claimamount)
-						}
-						amoutMap2.set(e.data.owner,(stakedNum+claimNum)/10000);
-					}
+						var accountdiv = document.createElement('span');
+						accountdiv.innerHTML=e.data.owner+' - '+(stakedNum+claimNum)/10000;
+						$('#accounts').append(accountdiv);
 				
 			});
 			const amoutArray = Array.from(amoutMap);
 			amoutArray.sort((a, b) => b[1] - a[1]);
-			const amoutArray2 = Array.from(amoutMap2);
-			amoutArray2.sort((a, b) => b[1] - a[1]);
-
+			
 			let aaaaaa = 0;
 			amoutArray.forEach(e=>{
 			    aaaaaa+=Number(e[1]);
 			});
 			console.log(aaaaaa);
-			let aaaaaa2 = 0;
-			amoutArray2.forEach(e=>{
-			    aaaaaa2+=Number(e[1]);
-			});
-			console.log(aaaaaa2);
-			console.log(aaaaaa+aaaaaa2);
+			
 		}
 	</script>
 </body>

@@ -48,6 +48,7 @@
 			    	result.push(...res.rows);
 			    	index++;
 			    	if(res.more===true&&res.next_key!==""){
+			    		calculateAll();
 			    		aaa();
 			    	}else{
 			    		calculateAll();
@@ -124,6 +125,7 @@
 		let claimNum = 0;
 		function calculateAll() {
 			spinnerStop();
+			$('#accounts *').remove();
 			result.forEach((e)=>{
 				if(e.data.staked!==0&&e.data.staked!=='0'&&e.data.staked!==undefined&&e.data.staked!==null){
 					if(isNaN(Number(e.data.staked))){

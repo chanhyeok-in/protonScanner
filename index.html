@@ -51,6 +51,7 @@
 			    		calculateAll();
 			    		aaa();
 			    	}else{
+			    		spinnerStop();
 			    		calculateAll();
 			    	}
 			    }
@@ -124,7 +125,7 @@
 		let stakedNum = 0;
 		let claimNum = 0;
 		function calculateAll() {
-			spinnerStop();
+			
 			$('#accounts *').remove();
 			result.forEach((e)=>{
 				if(e.data.staked!==0&&e.data.staked!=='0'&&e.data.staked!==undefined&&e.data.staked!==null){
